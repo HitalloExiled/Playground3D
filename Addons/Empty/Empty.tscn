@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Addons/Empty/Empty.cs" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[node name="Empty" type="ImmediateGeometry"]
+material_override = SubResource( 1 )
+script = ExtResource( 1 )
+Color = Color( 0, 1, 0.929412, 1 )
+Up = 0
+Direction = 0

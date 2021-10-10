@@ -1,0 +1,719 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Floor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Wall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Characters/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Box.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/ChainedBox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Pendulum.tscn" type="PackedScene" id=6]
+
+[node name="TestLevel" type="Spatial"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.669442, 0.485844, -0.561963, 0, 0.756482, 0.654015, 0.742864, -0.437825, 0.50642, 0, 12.6566, 0 )
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 25, 10, 26.396 )
+CameraPath = NodePath("../Camera")
+JumpHeight = 4.0
+MaxSlopeAngle = 40.0
+
+[node name="Ramps" type="Spatial" parent="."]
+transform = Transform( -0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, -0.819152, -7.85974, 0, -14.5827 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody17" parent="Ramps" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, -2.98023e-08, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 8, 1.74517, 9.36776 )
+
+[node name="StaticBody18" parent="Ramps" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 5.7017, 24.1732 )
+
+[node name="Ramps4" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9266, 0, 7.40745 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody17" parent="Ramps4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, -2.98023e-08, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 8, 1.74517, 9.36776 )
+
+[node name="StaticBody18" parent="Ramps4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 5.7017, 24.1732 )
+
+[node name="Ramps3" type="Spatial" parent="."]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 32.6319, 0, -14.0284 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody17" parent="Ramps3" instance=ExtResource( 1 )]
+transform = Transform( 0.999999, 5.32907e-15, 1.42109e-14, 0, 0.965925, 0.258819, -2.13163e-14, -0.258819, 0.965925, 8, 1.95553, 8.5273 )
+
+[node name="StaticBody18" parent="Ramps3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, 8, 4.01675, 24.1732 )
+
+[node name="Ramps2" type="Spatial" parent="."]
+transform = Transform( -0.0761449, 0, -0.997097, 0, 1, 0, 0.997097, 0, -0.0761449, -1.21375, 0, 15.2587 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody17" parent="Ramps2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 8, 0.103799, 10.6903 )
+
+[node name="StaticBody18" parent="Ramps2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 5.7017, 24.1732 )
+
+[node name="Static" type="Spatial" parent="."]
+
+[node name="Walls" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls2" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls8" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls9" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls9" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls10" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6059, -3.05176e-05, -64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls10" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls11" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls11" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls3" type="Spatial" parent="Static"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 48, 0, -6.99382e-07 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls4" type="Spatial" parent="Static"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -64, 0, -32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls4" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls5" type="Spatial" parent="Static"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -64, 0, 32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls5" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls6" type="Spatial" parent="Static"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 64, 0, -32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls6" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Walls7" type="Spatial" parent="Static"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 64, 0, 32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wall" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+
+[node name="Wall5" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+
+[node name="Wall6" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0 )
+
+[node name="Wall7" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+
+[node name="Wall8" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 0 )
+
+[node name="Wall2" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0 )
+
+[node name="Wall3" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+
+[node name="Wall4" parent="Static/Walls7" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0 )
+
+[node name="Floors" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 32 )
+
+[node name="StaticBody" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="StaticBody2" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="StaticBody3" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="StaticBody4" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="StaticBody5" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 8 )
+
+[node name="StaticBody6" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.25, -8 )
+
+[node name="StaticBody14" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.5, -6.79491 )
+
+[node name="StaticBody17" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.75, -5.64508 )
+
+[node name="StaticBody7" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 8 )
+
+[node name="StaticBody9" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24 )
+
+[node name="StaticBody10" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 24 )
+
+[node name="StaticBody11" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24 )
+
+[node name="StaticBody12" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24 )
+
+[node name="StaticBody13" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24 )
+
+[node name="StaticBody15" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24 )
+
+[node name="StaticBody16" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24 )
+
+[node name="StaticBody8" parent="Static/Floors" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -8 )
+
+[node name="Floors2" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 32 )
+
+[node name="StaticBody" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="StaticBody2" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="StaticBody3" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="StaticBody4" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="StaticBody5" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 8 )
+
+[node name="StaticBody7" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 8 )
+
+[node name="StaticBody9" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24 )
+
+[node name="StaticBody10" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 24 )
+
+[node name="StaticBody11" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24 )
+
+[node name="StaticBody12" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24 )
+
+[node name="StaticBody13" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24 )
+
+[node name="StaticBody14" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24 )
+
+[node name="StaticBody16" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24 )
+
+[node name="StaticBody8" parent="Static/Floors2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -8 )
+
+[node name="Floors3" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 32 )
+
+[node name="StaticBody" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="StaticBody2" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="StaticBody3" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="StaticBody4" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="StaticBody5" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 8 )
+
+[node name="StaticBody6" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -8 )
+
+[node name="StaticBody7" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 8 )
+
+[node name="StaticBody9" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24 )
+
+[node name="StaticBody10" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 24 )
+
+[node name="StaticBody11" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24 )
+
+[node name="StaticBody12" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24 )
+
+[node name="StaticBody13" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24 )
+
+[node name="StaticBody14" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24 )
+
+[node name="StaticBody15" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24 )
+
+[node name="StaticBody16" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24 )
+
+[node name="StaticBody8" parent="Static/Floors3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -8 )
+
+[node name="Floors4" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -32 )
+
+[node name="StaticBody" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="StaticBody2" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="StaticBody3" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="StaticBody4" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="StaticBody5" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 8 )
+
+[node name="StaticBody6" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -8 )
+
+[node name="StaticBody7" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 8 )
+
+[node name="StaticBody9" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24 )
+
+[node name="StaticBody10" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 24 )
+
+[node name="StaticBody11" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24 )
+
+[node name="StaticBody12" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24 )
+
+[node name="StaticBody13" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24 )
+
+[node name="StaticBody14" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24 )
+
+[node name="StaticBody15" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24 )
+
+[node name="StaticBody16" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24 )
+
+[node name="StaticBody8" parent="Static/Floors4" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -8 )
+
+[node name="Floors5" type="Spatial" parent="Static"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -32 )
+
+[node name="StaticBody" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="StaticBody2" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="StaticBody3" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="StaticBody4" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="StaticBody5" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 8 )
+
+[node name="StaticBody6" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -8 )
+
+[node name="StaticBody7" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 8 )
+
+[node name="StaticBody9" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24 )
+
+[node name="StaticBody10" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 24 )
+
+[node name="StaticBody11" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24 )
+
+[node name="StaticBody12" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24 )
+
+[node name="StaticBody13" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24 )
+
+[node name="StaticBody14" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24 )
+
+[node name="StaticBody15" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24 )
+
+[node name="StaticBody16" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24 )
+
+[node name="StaticBody8" parent="Static/Floors5" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -8 )
+
+[node name="Dynamic" type="Spatial" parent="."]
+
+[node name="Cube" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.57452, 1.25, -4.88709 )
+
+[node name="Cube6" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.42106, 4.68506, -4.88709 )
+
+[node name="Cube3" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0384, 1.25, 10.5017 )
+
+[node name="Cube7" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 17.688 )
+
+[node name="Cube8" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 7.38247, 28.8596 )
+
+[node name="Cube13" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 7.38247, 27.6314 )
+
+[node name="Cube9" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 8.65726, 28.8596 )
+
+[node name="Cube10" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 7.38247, 30.113 )
+
+[node name="Cube11" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 8.65726, 30.113 )
+
+[node name="Cube12" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 9.98143, 30.113 )
+
+[node name="Cube14" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 7.38247, 31.4087 )
+
+[node name="Cube15" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 8.65726, 31.4087 )
+
+[node name="Cube16" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 9.98143, 31.4087 )
+
+[node name="Cube17" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1043, 11.2578, 31.4087 )
+
+[node name="Cube4" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50597, 1.25, -14.1204 )
+
+[node name="Cube2" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2004, 1.25, 3.06379 )
+
+[node name="Cube5" parent="Dynamic" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2004, 3.25, 3.06379 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 10, 36.169 )
+size = 6.0
+
+[node name="Cube7" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
+
+[node name="Cube" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1303, 8.85079, 24.1785 )
+
+[node name="Spatial" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38722, 0.50749, 10.5811 )

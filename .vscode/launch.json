@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "mode": "playInEditor",
+            "name": "Play in Editor",
+            "request": "launch",
+            "type": "godot-mono"
+        },
+        {
+            "executable": "${workspaceRoot}/Godot.exe",
+            "executableArguments": [
+                "--path",
+                "${workspaceRoot}"
+            ],
+            "mode": "executable",
+            "name": "Launch",
+            "request": "launch",
+            "type": "godot-mono"
+        },
+        {
+            "address": "localhost",
+            "name": "Attach",
+            "port": 23685,
+            "request": "attach",
+            "type": "godot-mono"
+        }
+    ],
+    "version": "0.2.0"
+}

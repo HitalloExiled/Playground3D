@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        ".mono": true,
+        "**/*.tres": true,
+        "**/*.godot": true,
+        "**/*.import": true,
+        "**/FONTLOG.txt": true,
+        "**/LICENSE.txt": true,
+        "**/*.tscn": true
+    },
+    "files.watcherExclude": {
+        "**/target": true
+    }
+}

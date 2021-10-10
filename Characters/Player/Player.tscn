@@ -1,0 +1,192 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Characters/Player/Player.cs" type="Script" id=1]
+[ext_resource path="res://Fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://UI/direction.png" type="Texture" id=3]
+[ext_resource path="res://UI/velocity.png" type="Texture" id=4]
+[ext_resource path="res://UI/circle.png" type="Texture" id=5]
+[ext_resource path="res://Addons/Empty/Empty.cs" type="Script" id=6]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.5
+
+[sub_resource type="CapsuleMesh" id=2]
+radius = 0.5
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 1, 0, 1 )
+
+[sub_resource type="SphereMesh" id=4]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="SphereMesh" id=6]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="DynamicFont" id=7]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SpatialMaterial" id=11]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[node name="Player" type="RigidBody"]
+mode = 2
+mass = 5.10204
+contacts_reported = 8
+contact_monitor = true
+can_sleep = false
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+linear_damp = 0.0
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="EyeL" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.4, -0.4 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="EyeR" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.4, -0.4 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 5 )
+
+[node name="UI" type="Control" parent="."]
+margin_right = 135.0
+margin_bottom = 157.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UI"]
+position = Vector2( 96, 96 )
+scale = Vector2( 0.262295, 0.262295 )
+texture = ExtResource( 5 )
+
+[node name="CameraDirection" type="Sprite" parent="UI/Sprite"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -112.737, 1.26 )
+texture = ExtResource( 3 )
+
+[node name="Direction" type="Sprite" parent="UI/Sprite"]
+position = Vector2( 122, 0 )
+texture = ExtResource( 3 )
+
+[node name="Velocity" type="Sprite" parent="UI/Sprite"]
+texture = ExtResource( 4 )
+
+[node name="CameraPosition" type="Sprite" parent="UI/Sprite"]
+modulate = Color( 0, 1, 0, 1 )
+position = Vector2( -213.5, 0 )
+texture = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="UI/Sprite"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -610.0
+margin_top = -274.0
+margin_bottom = 275.0
+color = Color( 0.0117647, 0.254902, 0.490196, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Sprite/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -31.0
+custom_fonts/font = SubResource( 7 )
+text = "Air Time: 0s
+Camera Angle: 0º
+Input Velocity: (0, 0, 0)
+Is Grounded: false
+Is Jumping: false
+Is Near Ground: false
+Ground distance: 0m
+Jump Time: 0s
+Slope Angle: 0º
+Velocity: (0, 0, 0)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeadRange" type="ImmediateGeometry" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58886, 0 )
+material_override = SubResource( 8 )
+script = ExtResource( 6 )
+Type = 5
+Color = Color( 1, 0, 0, 1 )
+Size = 0.943361
+XRay = true
+
+[node name="FootRange" type="ImmediateGeometry" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.412537, 0 )
+material_override = SubResource( 9 )
+script = ExtResource( 6 )
+Type = 5
+Color = Color( 1, 0, 0, 1 )
+Size = 0.943361
+XRay = true
+
+[node name="SlopeDetector" type="ImmediateGeometry" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0.5 )
+material_override = SubResource( 10 )
+script = ExtResource( 6 )
+Orientation = 0
+Type = 0
+Color = Color( 0, 1, 0, 1 )
+XRay = true
+
+[node name="GroundDetector" type="ImmediateGeometry" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0 )
+material_override = SubResource( 11 )
+script = ExtResource( 6 )
+Orientation = 0
+Type = 0
+Color = Color( 0, 1, 0, 1 )
+XRay = true
+
+[node name="CameraTarget" type="ImmediateGeometry" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+material_override = SubResource( 12 )
+script = ExtResource( 6 )
+Color = Color( 0, 1, 0, 1 )
+Size = 0.2
+XRay = true
