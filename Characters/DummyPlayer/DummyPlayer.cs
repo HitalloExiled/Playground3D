@@ -9,19 +9,20 @@ public class DummyPlayer : CharacterController3D
     #endregion Constants
 
     #region Fields
-    private DebugDrawer debugDrawer;
-    private bool    automove;
-    private bool    automoveLeft;
-    private bool    automoveRight;
-    private bool    automoveUp;
-    private bool    automoveDown;
-    private bool    automoveInvert;
-    private float   automoveTimer;
-    private float   constantJumpTime;
-    private float   jumpTime;
-    private float   jumpVelocity;
-    private Label   label;
-    private float   targetJumpTime;
+    private bool                  automove;
+    private bool                  automoveDown;
+    private bool                  automoveInvert;
+    private bool                  automoveLeft;
+    private bool                  automoveRight;
+    private bool                  automoveUp;
+    private CameraController      camera;
+    private DebugDrawer           debugDrawer;
+    private float                 automoveTimer;
+    private float                 constantJumpTime;
+    private float                 jumpTime;
+    private float                 jumpVelocity;
+    private float                 targetJumpTime;
+    private Label                 label;
     private readonly List<string> messages = new List<string>();
     #endregion Fields
 
@@ -31,6 +32,9 @@ public class DummyPlayer : CharacterController3D
 
     [Export]
     public float Speed = 4f;
+
+    [Export]
+    public NodePath CameraPath;
     #endregion Exports
 
     #region Hooks
@@ -39,6 +43,7 @@ public class DummyPlayer : CharacterController3D
         this.label = this.GetNode<Label>("Control/Label");
 
         this.debugDrawer = ResourceLoader.Load<PackedScene>("res://Assets/DebugDrawer/DebugDrawer.tscn").Instance<DebugDrawer>();
+        this.camera      = this.GetNode<CameraController>(this.CameraPath);
 
         this.GetTree().Root.CallDeferred("add_child", this.debugDrawer);
 
@@ -70,16 +75,18 @@ public class DummyPlayer : CharacterController3D
             this.debugDrawer.DrawLine(collision.Position, collision.Position + collision.Normal, new Color(0, 0, 255));
         }
 
-        this.Log($"Origin:         {this.GlobalTransform.origin}");
-        this.Log($"Motion:         {this.LinearVelocity}");
-        this.Log($"Floor Velocity: {Mathf.Round(this.FloorVelocity.Length())}ms, {this.FloorVelocity}");
-        this.Log($"Floor Normal:   {Mathf.Round(Mathf.Rad2Deg(Vector3.Up.AngleTo(this.FloorNormal)))}°, {this.FloorNormal}");
-        this.Log($"Velocity:       {Mathf.Round(this.LinearVelocity.Length())}ms, {this.LinearVelocity}");
-        this.Log($"Collisions:     {collisions.Count()}");
-        this.Log($"Is On Ceiling:  {this.CollisionState.HasFlag(CollisionState.Top)}");
-        this.Log($"Is On Wall:     {this.CollisionState.HasFlag(CollisionState.Sides)}");
-        this.Log($"Is On Floor:    {this.CollisionState.HasFlag(CollisionState.Bottom)}");
-        this.Log($"Is Sliding:     {this.CollisionState.HasFlag(CollisionState.Sliding)}");
+        this.Log($"Origin:           {this.GlobalTransform.origin}");
+        this.Log($"Motion:           {this.LinearVelocity}");
+        this.Log($"Floor Velocity:   {Mathf.Round(this.FloorVelocity.Length())}ms, {this.FloorVelocity}");
+        this.Log($"Floor Normal:     {Mathf.Round(Mathf.Rad2Deg(Vector3.Up.AngleTo(this.FloorNormal)))}°, {this.FloorNormal}");
+        this.Log($"Velocity:         {Mathf.Round(this.LinearVelocity.Length())}ms, {this.LinearVelocity}");
+        this.Log($"Collisions:       {collisions.Count()}");
+        this.Log($"Is On Ceiling:    {this.CollisionState.HasFlag(CollisionState.Top)}");
+        this.Log($"Is On Wall:       {this.CollisionState.HasFlag(CollisionState.Sides)}");
+        this.Log($"Is On Floor:      {this.CollisionState.HasFlag(CollisionState.Bottom)}");
+        this.Log($"Is Sliding:       {this.CollisionState.HasFlag(CollisionState.Sliding)}");
+        this.Log($"Camera Latitude:  {this.camera.Latitude}");
+        this.Log($"Camera Longitude: {this.camera.Longitude}");
 
         this.label.Text = string.Join("\n", this.messages.Distinct().ToArray());
     }
@@ -92,8 +99,8 @@ public class DummyPlayer : CharacterController3D
 
     private Vector3 HandleInputs(float delta)
     {
-        var verticalVelocity   = Vector3.Zero;
-        var horizontalVelocity = Vector3.Zero;
+        var verticalInput   = Vector3.Zero;
+        var horizontalInput = Vector3.Zero;
 
         // if (Input.IsActionJustPressed("ui_up"))
         // {
@@ -127,8 +134,8 @@ public class DummyPlayer : CharacterController3D
 
         if (Input.IsActionJustPressed("ui_down"))
         {
-            this.automove      = false;
-            this.automoveUp  = false;
+            this.automove     = false;
+            this.automoveUp   = false;
             this.automoveDown = !this.automoveDown;
         }
 
@@ -140,46 +147,55 @@ public class DummyPlayer : CharacterController3D
                 this.automoveTimer = 0;
             }
 
-            horizontalVelocity.x = (this.automoveInvert ? -1 : 1);
+            horizontalInput.x = (this.automoveInvert ? -1 : 1);
 
             this.automoveTimer += delta;
         }
         else if (this.automoveLeft)
         {
-            horizontalVelocity.x = -1;
+            horizontalInput.x = -1;
         }
         else if (this.automoveRight)
         {
-            horizontalVelocity.x = 1;
+            horizontalInput.x = 1;
         }
 
         if (this.automoveUp)
         {
-            horizontalVelocity.z = -1;
+            horizontalInput.z = -1;
         }
         else if (this.automoveDown)
         {
-            horizontalVelocity.z = 1;
+            horizontalInput.z = 1;
         }
 
         if (Input.IsActionPressed("left"))
         {
-            horizontalVelocity.x = -1;
+            horizontalInput.x = -1;
         }
 
         if (Input.IsActionPressed("right"))
         {
-            horizontalVelocity.x = 1;
+            horizontalInput.x = 1;
         }
 
         if (Input.IsActionPressed("up"))
         {
-            horizontalVelocity.z = -1;
+            horizontalInput.z = -1;
         }
 
         if (Input.IsActionPressed("down"))
         {
-            horizontalVelocity.z = 1;
+            horizontalInput.z = 1;
+        }
+
+        if (Input.IsActionJustPressed("ui_cancel"))
+        {
+            var mode = Input.GetMouseMode() == Input.MouseMode.Captured
+                ? Input.MouseMode.Visible
+                : Input.MouseMode.Captured;
+
+            Input.SetMouseMode(mode);
         }
 
         if (this.CollisionState != CollisionState.None)
@@ -190,9 +206,9 @@ public class DummyPlayer : CharacterController3D
 
         if (Input.IsActionJustPressed("jump"))
         {
-            verticalVelocity.y = this.jumpVelocity = Mathf.Sqrt(-2 * -this.GravityForce * this.JumpHeight / 2);
+            verticalInput.y = this.jumpVelocity = Mathf.Sqrt(-2 * -this.GravityForce * this.JumpHeight / 2);
 
-            this.targetJumpTime   = verticalVelocity.y / -this.GravityForce;
+            this.targetJumpTime   = verticalInput.y / -this.GravityForce;
             this.constantJumpTime = this.JumpHeight / 2 / this.jumpVelocity;
             this.jumpTime        += delta;
 
@@ -202,7 +218,7 @@ public class DummyPlayer : CharacterController3D
         {
             if (Input.IsActionPressed("jump") && this.jumpTime < this.constantJumpTime)
             {
-                verticalVelocity.y = this.jumpVelocity;
+                verticalInput.y = this.jumpVelocity;
 
                 this.jumpTime += delta;
             }
@@ -211,9 +227,9 @@ public class DummyPlayer : CharacterController3D
                 var multiplier = (this.jumpTime / Mathf.Max(this.jumpTime, this.constantJumpTime));
                 var height     = Mathf.Max(0.5f, (this.JumpHeight / 2) * multiplier);
 
-                verticalVelocity.y = Mathf.Sqrt(-2 * -this.GravityForce * height);
+                verticalInput.y = Mathf.Sqrt(-2 * -this.GravityForce * height);
 
-                this.targetJumpTime = verticalVelocity.y / -this.GravityForce;
+                this.targetJumpTime = verticalInput.y / -this.GravityForce;
                 this.jumpVelocity   = 0;
             }
         }
@@ -222,6 +238,14 @@ public class DummyPlayer : CharacterController3D
             this.jumpTime = 0;
         }
 
-        return horizontalVelocity.Normalized() * this.Speed + (verticalVelocity != Vector3.Zero ? verticalVelocity : this.LinearVelocity * Vector3.Up);
+        horizontalInput = horizontalInput.Normalized();
+
+        var forward = (-this.camera.GlobalTransform.basis.z * new Vector3(1, 0, 1)).Normalized() * -horizontalInput.z;
+        var sides   = this.camera.GlobalTransform.basis.x * horizontalInput.x;
+
+        var horizontalVelocity = (forward + sides) * this.Speed;
+        var verticalVelocity   = (verticalInput != Vector3.Zero ? verticalInput : this.LinearVelocity * Vector3.Up);
+
+        return horizontalVelocity + verticalVelocity;
     }
 }

@@ -424,7 +424,7 @@ public abstract class CharacterController3D : KinematicBody
             }
         }
 
-        this.LinearVelocity  = velocity;
+        this.LinearVelocity = velocity;
 
         return collisions;
     }

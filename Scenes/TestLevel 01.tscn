@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Characters/DummyPlayer/DummyPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Pendulum.tscn" type="PackedScene" id=2]
@@ -8,19 +8,20 @@
 [ext_resource path="res://Characters/KineChan.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Platform.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Wall.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Characters/Camera/Camera.tscn" type="PackedScene" id=9]
 
 [node name="Spatial" type="Spatial"]
 
 [node name="DummyPlayer" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.9039, 1.82834, 45.4022 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.19354, 1.5183, 5.80374 )
 collision/safe_margin = 0.01
 CanPush = true
 CanSlide = true
 StopOnSlopes = true
 Weight = 80.0
+CameraPath = NodePath("../Camera")
 
-[node name="Camera" type="Camera" parent="DummyPlayer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9 )
+[node name="Camera" parent="." instance=ExtResource( 9 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.993876, 0.0401836, 0.102932, -0.0869924, -0.289833, 0.953116, 0.0681327, -0.956233, -0.284562, 9.61215, 11.4794, -1.25208 )
