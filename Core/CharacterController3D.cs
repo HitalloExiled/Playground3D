@@ -267,7 +267,7 @@ public abstract class CharacterController3D : KinematicBody
 
         var velocity           = this.LinearVelocity;
         var velocityNormalized = velocity.Normalized();
-        var verticalVelocity   = velocity * -this.Gravity;
+        var verticalVelocity   = velocity.Project(this.Gravity);
         var horizontalVelocity = velocity - verticalVelocity;
         var motion             = (this.LinearVelocity + this.FloorVelocity) * delta;
         var slides             = this.MaxSlides;
@@ -291,7 +291,7 @@ public abstract class CharacterController3D : KinematicBody
                 displacement  = collision.Travel;
                 motion        = collision.Remainder;
 
-                var horizontalMotion = motion - motion * -this.Gravity;
+                var horizontalMotion = motion - motion.Project(this.Gravity);
 
                 collisions.Add(collision);
 

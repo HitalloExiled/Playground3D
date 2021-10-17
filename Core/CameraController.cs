@@ -3,25 +3,39 @@ using Godot;
 
 public class CameraController : Camera
 {
+    private Vector3 up = Vector3.Up;
     private bool hasMoved;
     private float currentDistance;
     private float latitude;
     private float longitude;
 
-    public Spatial Target    { get; set; }
-    public float   Latitude  { get => this.latitude; set => this.latitude   = Math.Min(Math.Max(value, -89.9f), 89.9f); }
-    public float   Longitude
+    public Spatial Target { get; set; }
+
+    public float Latitude
+    {
+        get => this.latitude;
+        set
+        {
+            this.hasMoved = value != this.latitude;
+
+            this.latitude = Math.Min(Math.Max(value, -89.9f), 89.9f);
+        }
+    }
+
+    public float Longitude
     {
         get => this.longitude;
         set
         {
+            this.hasMoved = value != this.longitude;
+
             if (value > 360)
             {
-                this.longitude = 0;
+                this.longitude = value - 360;
             }
             else if (value < 0)
             {
-                this.longitude = 360;
+                this.longitude = value + 360;
             }
             else
             {
@@ -31,13 +45,26 @@ public class CameraController : Camera
     }
 
     [Export]
-    public NodePath TargetPath;
+    public bool Enabled { get; set; } = true;
 
     [Export]
-    public float Sensitivity = 0.25f;
+    public bool Follow { get; set; } = true;
 
     [Export]
-    public float Distance = 10;
+    public NodePath TargetPath { get; set; }
+
+    [Export]
+    public float Sensitivity { get; set; } = 0.25f;
+
+    [Export]
+    public float Distance { get; set; } = 10;
+
+    [Export]
+    public Vector3 Up
+    {
+        get => this.up;
+        set => this.up = value.Normalized();
+    }
 
     public override void _Ready()
     {
@@ -46,49 +73,53 @@ public class CameraController : Camera
         Input.SetMouseMode(Input.MouseMode.Captured);
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        this.hasMoved = false;
-        if (@event is InputEventMouse inputEvent)
-        {
-            if (inputEvent is InputEventMouseMotion inputEventMouseMotion)
-            {
-                var delta = inputEventMouseMotion.Relative * this.Sensitivity;
-
-                this.Latitude  += delta.y;
-                this.Longitude += -delta.x;
-
-                this.hasMoved = true;
-            }
-        }
-    }
-
     public override void _PhysicsProcess(float delta)
     {
-        // if (Input.GetMouseMode() != Input.MouseMode.Captured)
-        // {
-        //     return;
-        // }
+        if (!this.Enabled || Input.GetMouseMode() != Input.MouseMode.Captured)
+        {
+            return;
+        }
 
         var transform      = this.GlobalTransform;
         var targetPosition = this.Target.GlobalTransform.origin;
         var rotation       = Vector3.Zero;
+        var forward        = Vector3.Zero;
 
-        if (this.hasMoved)
+        if (Vector3.Left.IsEqualApprox(this.Up) || Vector3.Right.IsEqualApprox(this.Up))
         {
-            var latitudeRadians  = Mathf.Deg2Rad(this.Latitude);
-            var longitudeRadians = Mathf.Deg2Rad(this.Longitude);
-
-            var x = Mathf.Cos(latitudeRadians) * Mathf.Cos(longitudeRadians);
-            var y = Mathf.Sin(latitudeRadians);
-            var z = -Mathf.Cos(latitudeRadians) * Mathf.Sin(longitudeRadians);
-
-            rotation = new Vector3(x, y, z);
+            forward = -Vector3.Forward;
         }
         else
         {
-            rotation = (transform.origin - targetPosition).Normalized();
+            forward = Vector3.Right.Cross(this.Up);
         }
+
+        if (!this.hasMoved && this.Follow)
+        {
+            var direction = (transform.origin - targetPosition).Slide(this.Up).Normalized();
+
+            var cross   = forward.Cross(direction);
+            var dot     = forward.Dot(direction);
+            var radians = Mathf.Atan2(cross.Length(), dot);
+
+            if (this.Up.Dot(cross) < 0.0)
+            {
+                radians = -radians;
+            }
+
+            var angle = Mathf.Rad2Deg(radians);
+
+            this.Longitude = angle;
+        }
+
+        var latitudeRadians  = Mathf.Deg2Rad(this.Latitude);
+        var longitudeRadians = Mathf.Deg2Rad(this.Longitude);
+
+        var rotationX = forward.Rotated(this.Up, longitudeRadians).Normalized();
+
+        var right = rotationX.Cross(this.Up).Normalized();
+
+        rotation = rotationX.Rotated(right, latitudeRadians).Normalized();
 
         var result = this.GetWorld().DirectSpaceState.IntersectRay(targetPosition, targetPosition + (rotation * this.Distance), new Godot.Collections.Array { this, this.Target });
 
@@ -102,15 +133,12 @@ public class CameraController : Camera
 
         var position = targetPosition + rotation * this.currentDistance;
 
-        if (!this.hasMoved)
-        {
-            position.y = transform.origin.y;
-        }
-
         transform.origin = transform.origin.LinearInterpolate(position, this.hasMoved ? 1 : 0.5f);
 
         this.GlobalTransform = transform;
 
-        this.LookAt(targetPosition, Vector3.Up);
+        this.LookAt(targetPosition, this.Up);
+
+        this.hasMoved = false;
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using Godot;
 
@@ -38,6 +39,20 @@ public class DummyPlayer : CharacterController3D
     #endregion Exports
 
     #region Hooks
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouse inputEvent)
+        {
+            if (inputEvent is InputEventMouseMotion inputEventMouseMotion)
+            {
+                var delta = inputEventMouseMotion.Relative * this.camera.Sensitivity;
+
+                this.camera.Latitude  += delta.y;
+                this.camera.Longitude += -delta.x;
+            }
+        }
+    }
+
     public override void _Ready()
     {
         this.label = this.GetNode<Label>("Control/Label");
@@ -67,8 +82,8 @@ public class DummyPlayer : CharacterController3D
         var topPosition    = origin + -this.Gravity * this.BodySize / 2;
         var bottomPosition = origin + this.Gravity  * this.BodySize / 2;
 
-        this.debugDrawer.DrawLine(topPosition,    topPosition    + Vector3.Up   * 0.5f, new Color(255, 0, 255));
-        this.debugDrawer.DrawLine(bottomPosition, bottomPosition + Vector3.Down * 0.5f, new Color(255, 0, 255));
+        this.debugDrawer.DrawLine(topPosition,    topPosition    + -this.Gravity * 0.5f, new Color(255, 0, 255));
+        this.debugDrawer.DrawLine(bottomPosition, bottomPosition + this.Gravity  * 0.5f, new Color(255, 0, 255));
 
         foreach (var collision in collisions)
         {
@@ -240,11 +255,28 @@ public class DummyPlayer : CharacterController3D
 
         horizontalInput = horizontalInput.Normalized();
 
-        var forward = (-this.camera.GlobalTransform.basis.z * new Vector3(1, 0, 1)).Normalized() * -horizontalInput.z;
+        var isGrounded = this.CollisionState.HasFlag(CollisionState.Bottom);
+
+        var up = this.camera.Up.LinearInterpolate(isGrounded ? this.FloorNormal : Vector3.Up, 0.2f);
+
+        this.camera.Up = up;
+
+        var transform = this.GlobalTransform;
+
+        transform.basis.y = up;
+        transform.basis.x = -transform.basis.z.Cross(up);
+        transform.basis = transform.basis.Orthonormalized();
+
+        this.GlobalTransform = transform;
+
+        this.Gravity = isGrounded ? -this.FloorNormal : Vector3.Down;
+
+        var forward = -this.camera.GlobalTransform.basis.z.Slide(-this.Gravity).Normalized() * -horizontalInput.z;
         var sides   = this.camera.GlobalTransform.basis.x * horizontalInput.x;
 
-        var horizontalVelocity = (forward + sides) * this.Speed;
-        var verticalVelocity   = (verticalInput != Vector3.Zero ? verticalInput : this.LinearVelocity * Vector3.Up);
+        var horizontalVelocity     = (forward + sides) * this.Speed;
+        var linearVerticalVelocity = this.LinearVelocity.Project(this.Gravity);
+        var verticalVelocity       = (verticalInput != Vector3.Zero ? -this.Gravity * verticalInput.Length() : linearVerticalVelocity);
 
         return horizontalVelocity + verticalVelocity;
     }
