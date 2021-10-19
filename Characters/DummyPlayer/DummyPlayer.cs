@@ -47,8 +47,8 @@ public class DummyPlayer : CharacterController3D
             {
                 var delta = inputEventMouseMotion.Relative * this.camera.Sensitivity;
 
-                this.camera.Latitude  += delta.y;
-                this.camera.Longitude += -delta.x;
+                this.camera.Elevation  += delta.y;
+                this.camera.Azimut += -delta.x;
             }
         }
     }
@@ -90,6 +90,8 @@ public class DummyPlayer : CharacterController3D
             this.debugDrawer.DrawLine(collision.Position, collision.Position + collision.Normal, new Color(0, 0, 255));
         }
 
+        // this.debugDrawer.DrawLine(this.GlobalTransform.origin, this.GlobalTransform.origin + this.camera.previousForward, new Color(0, 0, 255));
+
         this.Log($"Origin:           {this.GlobalTransform.origin}");
         this.Log($"Motion:           {this.LinearVelocity}");
         this.Log($"Floor Velocity:   {Mathf.Round(this.FloorVelocity.Length())}ms, {this.FloorVelocity}");
@@ -100,8 +102,8 @@ public class DummyPlayer : CharacterController3D
         this.Log($"Is On Wall:       {this.CollisionState.HasFlag(CollisionState.Sides)}");
         this.Log($"Is On Floor:      {this.CollisionState.HasFlag(CollisionState.Bottom)}");
         this.Log($"Is Sliding:       {this.CollisionState.HasFlag(CollisionState.Sliding)}");
-        this.Log($"Camera Latitude:  {this.camera.Latitude}");
-        this.Log($"Camera Longitude: {this.camera.Longitude}");
+        this.Log($"Camera Azimut:    {Mathf.Round(this.camera.Azimut)}");
+        this.Log($"Camera Elevation: {Mathf.Round(this.camera.Elevation)}");
 
         this.label.Text = string.Join("\n", this.messages.Distinct().ToArray());
     }

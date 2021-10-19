@@ -3,44 +3,45 @@ using Godot;
 
 public class CameraController : Camera
 {
-    private Vector3 up = Vector3.Up;
-    private bool hasMoved;
+    private bool  hasMoved;
+    private float azimut;
     private float currentDistance;
-    private float latitude;
-    private float longitude;
+    private float elevation;
+    private Vector3 previousReference = Vector3.Forward;
+    private Vector3 up                = Vector3.Up;
 
     public Spatial Target { get; set; }
 
-    public float Latitude
+    public float Azimut
     {
-        get => this.latitude;
+        get => this.azimut;
         set
         {
-            this.hasMoved = value != this.latitude;
-
-            this.latitude = Math.Min(Math.Max(value, -89.9f), 89.9f);
-        }
-    }
-
-    public float Longitude
-    {
-        get => this.longitude;
-        set
-        {
-            this.hasMoved = value != this.longitude;
+            this.hasMoved = value != this.azimut;
 
             if (value > 360)
             {
-                this.longitude = value - 360;
+                this.azimut = value - 360;
             }
             else if (value < 0)
             {
-                this.longitude = value + 360;
+                this.azimut = value + 360;
             }
             else
             {
-                this.longitude = value;
+                this.azimut = value;
             }
+        }
+    }
+
+    public float Elevation
+    {
+        get => this.elevation;
+        set
+        {
+            this.hasMoved = value != this.elevation;
+
+            this.elevation = Math.Min(Math.Max(value, -89.9f), 89.9f);
         }
     }
 
@@ -66,6 +67,20 @@ public class CameraController : Camera
         set => this.up = value.Normalized();
     }
 
+    private float AngleTo(Vector3 left, Vector3 right, Vector3 axis)
+    {
+        var cross   = left.Cross(right);
+        var dot     = left.Dot(right);
+        var radians = Mathf.Atan2(cross.Length(), dot);
+
+        if (axis.Dot(cross) < 0.0)
+        {
+            radians = -radians;
+        }
+
+        return radians;
+    }
+
     public override void _Ready()
     {
         this.Target = this.GetNode<Spatial>(this.TargetPath);
@@ -83,39 +98,33 @@ public class CameraController : Camera
         var transform      = this.GlobalTransform;
         var targetPosition = this.Target.GlobalTransform.origin;
         var rotation       = Vector3.Zero;
-        var forward        = Vector3.Zero;
+        var reference      = Vector3.Zero;
 
         if (Vector3.Left.IsEqualApprox(this.Up) || Vector3.Right.IsEqualApprox(this.Up))
         {
-            forward = -Vector3.Forward;
+            reference = -Vector3.Forward;
         }
         else
         {
-            forward = Vector3.Right.Cross(this.Up);
+            reference = Vector3.Right.Cross(this.Up).Normalized();
         }
 
         if (!this.hasMoved && this.Follow)
         {
             var direction = (transform.origin - targetPosition).Slide(this.Up).Normalized();
 
-            var cross   = forward.Cross(direction);
-            var dot     = forward.Dot(direction);
-            var radians = Mathf.Atan2(cross.Length(), dot);
-
-            if (this.Up.Dot(cross) < 0.0)
-            {
-                radians = -radians;
-            }
-
-            var angle = Mathf.Rad2Deg(radians);
-
-            this.Longitude = angle;
+            this.Azimut = Mathf.Rad2Deg(this.AngleTo(reference, direction, this.Up));
+        }
+        else if (reference != previousReference)
+        {
+            var angle = Mathf.Rad2Deg(this.AngleTo(reference.Slide(this.Up).Normalized(), previousReference.Slide(this.Up).Normalized(), this.Up));
+            this.Azimut += angle;
         }
 
-        var latitudeRadians  = Mathf.Deg2Rad(this.Latitude);
-        var longitudeRadians = Mathf.Deg2Rad(this.Longitude);
+        var latitudeRadians  = Mathf.Deg2Rad(this.Elevation);
+        var longitudeRadians = Mathf.Deg2Rad(this.Azimut);
 
-        var rotationX = forward.Rotated(this.Up, longitudeRadians).Normalized();
+        var rotationX = reference.Rotated(this.Up, longitudeRadians).Normalized();
 
         var right = rotationX.Cross(this.Up).Normalized();
 
@@ -133,12 +142,14 @@ public class CameraController : Camera
 
         var position = targetPosition + rotation * this.currentDistance;
 
-        transform.origin = transform.origin.LinearInterpolate(position, this.hasMoved ? 1 : 0.5f);
+        transform.origin = transform.origin.LinearInterpolate(position, !this.hasMoved && this.Follow ? 0.5f : 1);
 
         this.GlobalTransform = transform;
 
         this.LookAt(targetPosition, this.Up);
 
         this.hasMoved = false;
+
+        this.previousReference = reference;
     }
 }
